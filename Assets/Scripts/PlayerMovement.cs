@@ -62,7 +62,25 @@ public class NewBehaviourScript : MonoBehaviour
     Debug.Log("Dash button pressed");
     if(canDash)
     {
-        Vector2 dashDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        Vector2 dashDirection;
+
+        if (horizontalInput == 0 && verticalInput == 0)
+        {
+            dashDirection = new Vector2(1, 0);
+        }
+
+        else if (verticalInput == 0)
+        {
+            dashDirection = new Vector2(horizontalInput, 0);
+        }
+        else
+        {
+            dashDirection = new Vector2(horizontalInput, verticalInput);
+        }
+
         body.AddForce(dashDirection.normalized * dashForce, ForceMode2D.Impulse);
         canDash = false;
         StartCoroutine(DashCooldown());
