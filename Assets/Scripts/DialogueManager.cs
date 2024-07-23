@@ -2,11 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DialogManager : MonoBehaviour
 {
     public GameObject chatPanel;
-    public Text ChatText;
+    public TMP_Text ChatText;
     public Button nextButton;
     private string[] messages;
     private int currentMessageIndex;

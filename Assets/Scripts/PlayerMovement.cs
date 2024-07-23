@@ -61,6 +61,7 @@ public class NewBehaviourScript : MonoBehaviour
 {
     Debug.Log("Dash button pressed");
     if(canDash)
+    
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
