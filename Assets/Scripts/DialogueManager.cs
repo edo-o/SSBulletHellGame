@@ -27,6 +27,18 @@ public class DialogManager : MonoBehaviour
 
     public void DisplayNextMessage()
     {
+        if (ChatText == null)
+        {
+            Debug.LogWarning("ChatText is null");
+            return;
+        }
+
+        if (messages == null)
+        {
+            Debug.LogWarning("Messages is null");
+            return;
+        }
+        
         if (currentMessageIndex < messages.Length)
         {
             ChatText.text = messages[currentMessageIndex];

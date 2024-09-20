@@ -9,11 +9,36 @@ public class NPCInteraction : MonoBehaviour
     public string[] messages;
     private bool playerInRange;
 
+    void Start()
+    {
+        if (messages == null || messages.Length == 0)
+        {
+            Debug.LogWarning("Messages is null or empty");
+        }
+        else
+        {
+            Debug.Log("Messages array initialized with " + messages.Length + " messages.");
+        }
+
+        if (dialogueManager == null)
+        {
+            Debug.LogError("DialogManager is not assigned.");
+        }
+    }
+
     void Update()
     {
         if (playerInRange && Input.GetKeyDown(KeyCode.E))
         {
-            dialogueManager.StartDialogue(messages);
+            if (dialogueManager != null && messages != null && messages.Length > 0)
+            {
+                dialogueManager.StartDialogue(messages);
+                Debug.Log("Starting dialogue with messages.");
+            }
+            else
+            {
+                Debug.LogWarning("Cannot start dialogue. Either dialogueManager is null or messages are not set.");
+            }
         }
     }
 
@@ -22,6 +47,7 @@ public class NPCInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = true;
+            Debug.Log("Player entered range.");
         }
     }
 
@@ -30,7 +56,11 @@ public class NPCInteraction : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             playerInRange = false;
-            dialogueManager.EndDialogue();    
+            if (dialogueManager != null)
+            {
+                dialogueManager.EndDialogue();
+                Debug.Log("Ending dialogue.");
+            }
         }
     }
 }
