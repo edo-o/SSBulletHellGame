@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
     [SerializeField] private float speed;
-    private Rigidbody2D body;
     public float dashForce;
     public float dashCooldownTime;
+    public GameObject projectilePrefab;
+    public Transform projectileSpawnPoint;
+
     private bool canDash = true;
+    private bool isShooting = false;
+    private Rigidbody2D body;
 
     private void Awake()
     {
@@ -59,5 +64,36 @@ public class NewBehaviourScript : MonoBehaviour
         StartCoroutine(DashCooldown());
     }
 }
-    }   
+
+if (Input.GetKey(KeyCode.E))
+{
+    if (!isShooting)
+    {
+        isShooting = true;
+        StartCoroutine(ShootContinuosly());
+    }
 }
+else
+{
+    isShooting = false;
+}
+    } 
+
+    private IEnumerator ShootContinuosly()
+    {
+        while (isShooting)
+        {
+            ShootProjectile();
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    private void ShootProjectile()
+    {
+        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+
+        Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
+        projectileRb.velocity = new Vector2(0, 10f);
+    }
+}
+
