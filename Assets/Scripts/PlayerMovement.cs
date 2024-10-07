@@ -65,7 +65,7 @@ public class NewBehaviourScript : MonoBehaviour
     }
 }
 
-if (Input.GetKey(KeyCode.E))
+if (Input.GetKey(KeyCode.Space))
 {
     if (!isShooting)
     {
