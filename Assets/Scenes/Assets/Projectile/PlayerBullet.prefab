@@ -162,3 +162,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
+  bulletLife: 2
+  rotation: 0
+  speed: 15

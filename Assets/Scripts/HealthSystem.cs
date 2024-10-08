@@ -5,6 +5,7 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     public int health = 2;
+    public GameObject explosionPrefab;
     
     public void TakeDamage(int damage)
     {
@@ -19,6 +20,8 @@ public class HealthSystem : MonoBehaviour
     
     void Die()
     {
+        Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
         Destroy(gameObject);
     }
 }
