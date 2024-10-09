@@ -163,5 +163,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   damage: 1
   bulletLife: 2
-  rotation: 0
   speed: 15
+  bulletPrefab: {fileID: 8339488564155003692}
+  firePoint: {fileID: 0}
