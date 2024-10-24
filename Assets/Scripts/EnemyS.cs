@@ -23,7 +23,7 @@ public class EnemyS : MonoBehaviour
     {
         GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
 
-        bullet.layer = LayerMask.NameToLayer("EnemyBullet");
+        //bullet.layer = LayerMask.NameToLayer("PlayerBullet");
 
         Vector2 direction = (player.position - transform.position).normalized;
         bullet.GetComponent<Rigidbody2D>().velocity = direction * bulletSpeed;
