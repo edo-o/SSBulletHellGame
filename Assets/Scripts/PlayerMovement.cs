@@ -90,10 +90,6 @@ else
 
     private void ShootProjectile()
     {
-        float spawnOffset = 10.0f;
-
-        Vector3 spawnPosition = new Vector3(projectileSpawnPoint.position.x, projectileSpawnPoint.position.y + spawnOffset, projectileSpawnPoint.position.z);
-
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
 
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
