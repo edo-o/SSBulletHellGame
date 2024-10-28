@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class HealthSystem : MonoBehaviour
 {
-    public int health = 2;
+    public int maxHealth = 10;
+    private int currentHealth;
     public GameObject explosionPrefab;
+
+    void Start()
+    {
+        currentHealth = maxHealth;
+    }
     
     public void TakeDamage(int damage)
     {
-        health -= damage;
+        currentHealth -= damage;
 
-        if (health <= 0)
+        if (currentHealth <= 0)
         {
             Die();
         }
@@ -21,6 +27,11 @@ public class HealthSystem : MonoBehaviour
     void Die()
     {
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+
+        if (gameObject.CompareTag("Boss"))
+        {
+            GameManager.instance.BossDefeated();
+        }
 
         Destroy(gameObject);
     }
