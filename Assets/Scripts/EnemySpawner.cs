@@ -6,6 +6,7 @@ public class EnemySpawner : MonoBehaviour
 {
     public GameObject regularEnemyPrefab;
     public GameObject bossEnemyPrefab;
+    public float spawnRadius = 1.5f;
     public Transform[] spawnPoints;
     public float spawnDelay = 2f;
     public int totalRegularEnemies = 5;
@@ -22,28 +23,50 @@ public class EnemySpawner : MonoBehaviour
     {
         while (enemiesSpawned < totalRegularEnemies)
         {
-            SpawnEnemy(regularEnemyPrefab);
-            enemiesSpawned++;
+            Transform validSpawnPoint = GetValidSpawnPoint();
+            if (validSpawnPoint != null)
+            {
+                Instantiate(regularEnemyPrefab, validSpawnPoint.position, Quaternion.identity);
+                enemiesSpawned++;
+            }
             yield return new WaitForSeconds(spawnDelay);
         }
 
         SpawnBoss();
     }
 
-
-    private void SpawnEnemy(GameObject enemyPrefab)
+    private Transform GetValidSpawnPoint()
     {
-        int spawnIndex = Random.Range(0, spawnPoints.Length);
-        Instantiate(enemyPrefab, spawnPoints[spawnIndex].position, Quaternion.identity);
+        foreach (Transform spawnPoint in spawnPoints)
+        {
+            Collider2D overlap = Physics2D.OverlapCircle(spawnPoint.position, spawnRadius);
+            if (overlap == null)
+            {
+                return spawnPoint;
+            }
+        }
+        return null;
     }
 
     private void SpawnBoss()
     {
         if (!bossSpawned)
         {
-            int spawnIndex = Random.Range(0, spawnPoints.Length);
-            Instantiate(bossEnemyPrefab, spawnPoints[spawnIndex].position, Quaternion.identity);
-            bossSpawned = true;
+            Transform validSpawnPoint = GetValidSpawnPoint();
+            if (validSpawnPoint != null)
+            {
+                Instantiate(bossEnemyPrefab, validSpawnPoint.position, Quaternion.identity);
+                bossSpawned = true;
+            }
+        }
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        foreach (Transform spawnPoint in spawnPoints)
+        {
+            Gizmos.DrawWireSphere(spawnPoint.position, spawnRadius);
         }
     }
     

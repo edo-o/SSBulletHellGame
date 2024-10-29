@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8219284860852120509}
   - component: {fileID: 4882017506456612236}
   - component: {fileID: 3445555471160532982}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BulletSpawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,9 +116,10 @@ GameObject:
   - component: {fileID: 2106000805244152231}
   - component: {fileID: 7483276488128263975}
   - component: {fileID: 1421306748340265908}
+  - component: {fileID: -1908846831503602947}
   m_Layer: 10
   m_Name: ShootSPinEnemy
-  m_TagString: Player
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -283,3 +284,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHealth: 10
   explosionPrefab: {fileID: 4527872701403851826, guid: 753bccc6850dc904ea28f64a9b4fe962, type: 3}
+--- !u!114 &-1908846831503602947
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7396307240661589006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7485512513e3e4b49bfee0e01e53fa80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  movementType: 1
+  speed: 2
+  movementRange: 3
