@@ -7,15 +7,17 @@ public class EnemySpawner : MonoBehaviour
     public GameObject regularEnemyPrefab;
     public GameObject bossEnemyPrefab;
     public float spawnRadius = 1.5f;
-    public Transform[] spawnPoints;
     public float spawnDelay = 2f;
     public int totalRegularEnemies = 5;
+    public float spawnDistance = 5f;
 
     private int enemiesSpawned = 0;
     private bool bossSpawned = false;
+    private Camera mainCamera;
 
     void Start()
     {
+        mainCamera = Camera.main;
         StartCoroutine(SpawnRegularEnemies());
     }
 
@@ -23,51 +25,70 @@ public class EnemySpawner : MonoBehaviour
     {
         while (enemiesSpawned < totalRegularEnemies)
         {
-            Transform validSpawnPoint = GetValidSpawnPoint();
-            if (validSpawnPoint != null)
-            {
-                Instantiate(regularEnemyPrefab, validSpawnPoint.position, Quaternion.identity);
-                enemiesSpawned++;
-            }
+            SpawnEnemy(regularEnemyPrefab);
+            enemiesSpawned++;
             yield return new WaitForSeconds(spawnDelay);
         }
 
         SpawnBoss();
     }
 
-    private Transform GetValidSpawnPoint()
+    private void SpawnEnemy(GameObject enemyPrefab)
     {
-        foreach (Transform spawnPoint in spawnPoints)
-        {
-            Collider2D overlap = Physics2D.OverlapCircle(spawnPoint.position, spawnRadius);
-            if (overlap == null)
-            {
-                return spawnPoint;
-            }
-        }
-        return null;
+        Vector2 spawnPosition = GetOffScreenPosition();
+        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        
+        UnityEngine.Vector2 targetPosition = mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f));
+        enemy.GetComponent<EnemyMovement>().SetTargetPosition(targetPosition);
     }
 
     private void SpawnBoss()
     {
         if (!bossSpawned)
         {
-            Transform validSpawnPoint = GetValidSpawnPoint();
-            if (validSpawnPoint != null)
-            {
-                Instantiate(bossEnemyPrefab, validSpawnPoint.position, Quaternion.identity);
-                bossSpawned = true;
-            }
+            Vector2 spawnPosition = GetOffScreenPosition();
+            GameObject bossEnemy = Instantiate(bossEnemyPrefab, spawnPosition, Quaternion.identity);
+
+            Vector2 targetPosition = mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f));
+            bossEnemy.GetComponent<EnemyMovement>().SetTargetPosition(targetPosition);
+
+            bossSpawned = true;
         }
+    }
+
+    private Vector2 GetOffScreenPosition()
+    {
+        float camHeight = mainCamera.orthographicSize;
+        float camWidth = camHeight * mainCamera.aspect;
+
+        int side = Random.Range(0, 4);
+        Vector2 spawnPosition = Vector2.zero;
+
+        switch (side)
+        {
+            case 0: //Top
+                spawnPosition = new Vector2(Random.Range(-camWidth, camWidth), camHeight + spawnDistance);
+                break;
+            case 2: //Left
+                spawnPosition = new Vector2(-camWidth - spawnDistance, Random.Range(-camHeight, camHeight));
+                break;
+            case 3: //Right
+                spawnPosition = new Vector2(camWidth + spawnDistance, Random.Range(-camHeight, camHeight));
+                break;
+        
+        }
+        return spawnPosition;
     }
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
-        foreach (Transform spawnPoint in spawnPoints)
+        if (mainCamera == null)
         {
-            Gizmos.DrawWireSphere(spawnPoint.position, spawnRadius);
+            mainCamera = Camera.main;
         }
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f)), spawnRadius);
     }
     
 }
