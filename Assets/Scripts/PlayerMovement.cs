@@ -105,15 +105,15 @@ else
     private void ShootProjectile()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-    mousePosition.z = 0f;  // Ensure it's at 0 in the z-axis for 2D
+        mousePosition.z = 0f; 
 
-    // Calculate the direction from player to mouse
-    Vector2 shootDirection = (mousePosition - projectileSpawnPoint.position).normalized;
+    
+        Vector2 shootDirection = (mousePosition - projectileSpawnPoint.position).normalized;
 
-    // Instantiate the bullet and set its direction
-    GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-    Bullet bulletScript = projectile.GetComponent<Bullet>();
-    bulletScript.direction = shootDirection;
+        
+        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        Bullet bulletScript = projectile.GetComponent<Bullet>();
+        bulletScript.direction = shootDirection;
     }
 }
 
