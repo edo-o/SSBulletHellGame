@@ -38,7 +38,7 @@ public class EnemySpawner : MonoBehaviour
         Vector2 spawnPosition = GetOffScreenPosition();
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         
-        UnityEngine.Vector2 targetPosition = mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f));
+        Vector2 targetPosition = mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f));
         enemy.GetComponent<EnemyMovement>().SetTargetPosition(targetPosition);
     }
 
@@ -61,19 +61,22 @@ public class EnemySpawner : MonoBehaviour
         float camHeight = mainCamera.orthographicSize;
         float camWidth = camHeight * mainCamera.aspect;
 
-        int side = Random.Range(0, 4);
+        float minSpawnDistance = spawnDistance;
+
+        int side = Random.Range(0, 3);
+
         Vector2 spawnPosition = Vector2.zero;
 
         switch (side)
         {
             case 0: //Top
-                spawnPosition = new Vector2(Random.Range(-camWidth, camWidth), camHeight + spawnDistance);
+                spawnPosition = new Vector2(Random.Range(-camWidth, camWidth), camHeight + minSpawnDistance);
                 break;
             case 2: //Left
-                spawnPosition = new Vector2(-camWidth - spawnDistance, Random.Range(-camHeight, camHeight));
+                spawnPosition = new Vector2(-camWidth - minSpawnDistance, Random.Range(-camHeight, camHeight));
                 break;
             case 3: //Right
-                spawnPosition = new Vector2(camWidth + spawnDistance, Random.Range(-camHeight, camHeight));
+                spawnPosition = new Vector2(camWidth + minSpawnDistance, Random.Range(-camHeight, camHeight));
                 break;
         
         }
@@ -88,7 +91,7 @@ public class EnemySpawner : MonoBehaviour
         }
         
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f)), spawnRadius);
+        Gizmos.DrawWireCube(mainCamera.transform.position, new Vector3(mainCamera.orthographicSize * mainCamera.aspect * 2 + spawnDistance, mainCamera.orthographicSize * 2 + spawnDistance, 0));
     }
     
 }

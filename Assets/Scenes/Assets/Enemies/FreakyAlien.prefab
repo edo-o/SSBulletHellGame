@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 1853628224740902174}
   - component: {fileID: 5862844168558033413}
   - component: {fileID: 4250499794979685503}
+  - component: {fileID: 1013728448729490694}
   m_Layer: 10
   m_Name: FreakyAlien
   m_TagString: Boss
@@ -175,7 +176,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  bulletPrefab: {fileID: 8339488564155003692, guid: 35bc5e2571d2486479feecfd764d526d, type: 3}
+  bulletPrefab: {fileID: 0}
   bulletSpeed: 5
   fireRate: 2
 --- !u!114 &4250499794979685503
@@ -190,8 +191,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58cd891a42d7814cb6b28f04a98824e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
+  maxHealth: 30
   explosionPrefab: {fileID: 5330045719513488236, guid: 099846d8b57733e44a8c95e79f8cefdd, type: 3}
+--- !u!114 &1013728448729490694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3455721371699553475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7485512513e3e4b49bfee0e01e53fa80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 2
 --- !u!1001 &1416826397203325155
 PrefabInstance:
   m_ObjectHideFlags: 0

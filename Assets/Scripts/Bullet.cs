@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Transactions;
 using UnityEngine;
 
 public class Bullet : MonoBehaviour
@@ -8,6 +9,8 @@ public class Bullet : MonoBehaviour
     public float bulletLife = 1f;
     public float rotation = 0f;
     public float speed = 1f;
+
+    public Vector2 direction;
 
     private Vector2 spawnpoint;
     private float timer = 0f;
@@ -21,14 +24,7 @@ public class Bullet : MonoBehaviour
     {
         if(timer > bulletLife) Destroy(this.gameObject);
         timer += Time.deltaTime;
-        transform.position = Movement(timer);
-    }
-
-    private Vector2 Movement(float timer)
-    {
-        float x = timer * speed * transform.up.x;
-        float y = timer * speed * transform.up.y;
-        return new Vector2(x+spawnpoint.x, y+spawnpoint.y);
+        transform.position += (Vector3)direction * speed * Time.deltaTime;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -42,5 +38,15 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject);
         }
     }
+
+
+/*  private Vector2 Movement(float timer)
+    {
+        float x = timer * speed * transform.up.x;
+        float y = timer * speed * transform.up.y;
+        return new Vector2(x+spawnpoint.x, y+spawnpoint.y);
+    }
+*/
+
 
 }

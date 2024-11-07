@@ -65,6 +65,8 @@ public class NewBehaviourScript : MonoBehaviour
     }
 }
 
+AimTowardsMouse();
+
 if (Input.GetKey(KeyCode.Space))
 {
     if (!isShooting)
@@ -73,10 +75,22 @@ if (Input.GetKey(KeyCode.Space))
         StartCoroutine(ShootContinuosly());
     }
 }
+
 else
 {
     isShooting = false;
 }
+    }
+
+    private void AimTowardsMouse()
+    {
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mousePosition.z = 0;
+
+
+        Vector2 direction = (mousePosition - transform.position).normalized;
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     } 
 
     private IEnumerator ShootContinuosly()
@@ -90,10 +104,16 @@ else
 
     private void ShootProjectile()
     {
-        GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+    mousePosition.z = 0f;  // Ensure it's at 0 in the z-axis for 2D
 
-        Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
-        projectileRb.velocity = new Vector2(0, 30f);
+    // Calculate the direction from player to mouse
+    Vector2 shootDirection = (mousePosition - projectileSpawnPoint.position).normalized;
+
+    // Instantiate the bullet and set its direction
+    GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
+    Bullet bulletScript = projectile.GetComponent<Bullet>();
+    bulletScript.direction = shootDirection;
     }
 }
 

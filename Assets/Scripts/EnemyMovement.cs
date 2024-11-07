@@ -6,18 +6,18 @@ public class EnemyMovement : MonoBehaviour
 {
     public float speed = 2f;
     private Vector2 targetPosition;
-    private bool hasTarget = false;
+    private bool reachedTarget = false;
 
 
     void Update()
     {
-        if (hasTarget)
+        if (!reachedTarget)
         {
             transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
             if (Vector2.Distance(transform.position, targetPosition) < 0.1f)
             {
-                hasTarget = false;
+                reachedTarget = true;
             }
         }
     }
@@ -26,6 +26,5 @@ public class EnemyMovement : MonoBehaviour
     public void SetTargetPosition(Vector2 position)
     {
         targetPosition = position;
-        hasTarget = true;
     }
 }
