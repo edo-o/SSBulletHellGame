@@ -72,6 +72,9 @@ public class EnemySpawner : MonoBehaviour
             case 0: //Top
                 spawnPosition = new Vector2(Random.Range(-camWidth, camWidth), camHeight + minSpawnDistance);
                 break;
+            case 1: //bottom
+                spawnPosition = new Vector2(Random.Range(-camWidth, camWidth), -camHeight - minSpawnDistance);
+                break;
             case 2: //Left
                 spawnPosition = new Vector2(-camWidth - minSpawnDistance, Random.Range(-camHeight, camHeight));
                 break;

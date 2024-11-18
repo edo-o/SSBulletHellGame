@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 1013728448729490694}
   m_Layer: 10
   m_Name: FreakyAlien
-  m_TagString: Boss
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

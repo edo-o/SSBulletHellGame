@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour
 {
     public int damage = 1;
     public float bulletLife = 1f;
-    public float rotation = 0f;
     public float speed = 1f;
 
     public Vector2 direction;
@@ -17,24 +16,29 @@ public class Bullet : MonoBehaviour
 
     void Start()
     {
-        spawnpoint = new Vector2(transform.position.x, transform.position.y);
+        if (direction == Vector2.zero)
+        {
+            direction = Vector2.up;
+        }
     }
 
     void Update()
     {
-        if(timer > bulletLife) Destroy(this.gameObject);
+        if(timer > bulletLife)
+        {
+            Destroy(this.gameObject);
+        }
         timer += Time.deltaTime;
+
         transform.position += (Vector3)direction * speed * Time.deltaTime;
     }
 
     void OnTriggerEnter2D(Collider2D collision)
     {
         HealthSystem healthSystem = collision.GetComponent<HealthSystem>();
-
         if (healthSystem != null)
         {
             healthSystem.TakeDamage(damage);
-
             Destroy(gameObject);
         }
     }
