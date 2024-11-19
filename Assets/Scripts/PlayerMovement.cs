@@ -65,8 +65,6 @@ public class NewBehaviourScript : MonoBehaviour
     }
 }
 
-AimTowardsMouse();
-
 if (Input.GetKey(KeyCode.Space))
 {
     if (!isShooting)
@@ -75,22 +73,10 @@ if (Input.GetKey(KeyCode.Space))
         StartCoroutine(ShootContinuosly());
     }
 }
-
 else
 {
     isShooting = false;
 }
-    }
-
-    private void AimTowardsMouse()
-    {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePosition.z = 0;
-
-
-        Vector2 direction = (mousePosition - transform.position).normalized;
-        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     } 
 
     private IEnumerator ShootContinuosly()
@@ -105,9 +91,8 @@ else
     private void ShootProjectile()
     {
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
-        Bullet bulletScript = projectile.GetComponent<Bullet>();
-        bulletScript.direction = Vector2.up;
-        bulletScript.speed = 10f;
+
+        Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
+        projectileRb.velocity = new Vector2(0, 30f);
     }
 }
-
