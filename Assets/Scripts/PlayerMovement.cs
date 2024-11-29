@@ -5,78 +5,56 @@ using UnityEngine;
 
 public class NewBehaviourScript : MonoBehaviour
 {
-    [SerializeField] private float speed;
-    public float dashForce;
-    public float dashCooldownTime;
+    public float normalSpeed = 5f;
+    public float focusedSpeed = 2.5f;
+    public float normalFireRate = 0.1f;
+    public float focusedFireRate = 0.05f;
+    private float currentSpeed;
+    private float currentFireRate;
+    private bool isShooting = false;
+
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
-
-    private bool canDash = true;
-    private bool isShooting = false;
     private Rigidbody2D body;
 
-    private void Awake()
+    void Start()
     {
         body = GetComponent<Rigidbody2D>();
-        body.constraints = RigidbodyConstraints2D.FreezeRotation;
+        currentSpeed = normalSpeed;
+        currentFireRate = normalFireRate;
     }
 
-     private IEnumerator DashCooldown()
-    {
-        yield return new WaitForSeconds(dashCooldownTime);
-        canDash = true;
-    }
-
-    private void Update()
+    void Update()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        body.velocity = new Vector2(moveHorizontal * speed, moveVertical * speed);
+        body.velocity = new Vector2(moveHorizontal * currentSpeed, moveVertical * currentSpeed);
 
-    if(Input.GetButtonDown("Dash"))
-{
-    Debug.Log("Dash button pressed");
-    if(canDash)
-    
-    {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
 
-        Vector2 dashDirection;
-
-        if (horizontalInput == 0 && verticalInput == 0)
+        if (Input.GetKey(KeyCode.Space))
         {
-            dashDirection = new Vector2(1, 0);
-        }
-
-        else if (verticalInput == 0)
-        {
-            dashDirection = new Vector2(horizontalInput, 0);
+            if (!isShooting)
+            {
+                isShooting = true;
+                StartCoroutine(ShootContinuosly());
+            }
         }
         else
         {
-            dashDirection = new Vector2(horizontalInput, verticalInput);
+            isShooting = false;
         }
 
-        body.AddForce(dashDirection.normalized * dashForce, ForceMode2D.Impulse);
-        canDash = false;
-        StartCoroutine(DashCooldown());
-    }
-}
-
-if (Input.GetKey(KeyCode.Space))
-{
-    if (!isShooting)
-    {
-        isShooting = true;
-        StartCoroutine(ShootContinuosly());
-    }
-}
-else
-{
-    isShooting = false;
-}
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            currentSpeed = focusedSpeed;
+            currentFireRate = focusedFireRate;
+        }
+        else
+        {
+            currentSpeed = normalSpeed;
+            currentFireRate = normalFireRate;
+        }
     } 
 
     private IEnumerator ShootContinuosly()
@@ -84,7 +62,7 @@ else
         while (isShooting)
         {
             ShootProjectile();
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(currentFireRate);
         }
     }
 

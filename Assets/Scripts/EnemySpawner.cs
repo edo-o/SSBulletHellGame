@@ -15,6 +15,8 @@ public class EnemySpawner : MonoBehaviour
     private bool bossSpawned = false;
     private Camera mainCamera;
 
+    public Vector2 targetPosition;
+
     void Start()
     {
         mainCamera = Camera.main;
@@ -38,7 +40,7 @@ public class EnemySpawner : MonoBehaviour
         Vector2 spawnPosition = GetOffScreenPosition();
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         
-        UnityEngine.Vector2 targetPosition = mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f));
+        Vector2 targetPosition = GameObject.FindWithTag("TargetPosition").transform.position;
         enemy.GetComponent<EnemyMovement>().SetTargetPosition(targetPosition);
     }
 
@@ -49,7 +51,7 @@ public class EnemySpawner : MonoBehaviour
             Vector2 spawnPosition = GetOffScreenPosition();
             GameObject bossEnemy = Instantiate(bossEnemyPrefab, spawnPosition, Quaternion.identity);
 
-            Vector2 targetPosition = mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f));
+            Vector2 targetPosition = GameObject.FindWithTag("TargetPosition").transform.position;
             bossEnemy.GetComponent<EnemyMovement>().SetTargetPosition(targetPosition);
 
             bossSpawned = true;
@@ -61,34 +63,9 @@ public class EnemySpawner : MonoBehaviour
         float camHeight = mainCamera.orthographicSize;
         float camWidth = camHeight * mainCamera.aspect;
 
-        int side = Random.Range(0, 4);
-        Vector2 spawnPosition = Vector2.zero;
+        Vector2 spawnPosition = new Vector2(Random.Range(-camWidth, camWidth), camHeight + spawnDistance);
 
-        switch (side)
-        {
-            case 0: //Top
-                spawnPosition = new Vector2(Random.Range(-camWidth, camWidth), camHeight + spawnDistance);
-                break;
-            case 2: //Left
-                spawnPosition = new Vector2(-camWidth - spawnDistance, Random.Range(-camHeight, camHeight));
-                break;
-            case 3: //Right
-                spawnPosition = new Vector2(camWidth + spawnDistance, Random.Range(-camHeight, camHeight));
-                break;
-        
-        }
         return spawnPosition;
-    }
-
-    private void OnDrawGizmos()
-    {
-        if (mainCamera == null)
-        {
-            mainCamera = Camera.main;
-        }
-        
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(mainCamera.ViewportToWorldPoint(new Vector2(0.5f, 0.5f)), spawnRadius);
     }
     
 }

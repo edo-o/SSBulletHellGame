@@ -10,6 +10,7 @@ public class BulletSpawner : MonoBehaviour
     public GameObject bullet;
     public float bulletLife;
     public float speed; 
+    private GameObject player;
 
     [Header("Spawner Attributes")]
     [SerializeField] private SpawnerType spawnerType;
@@ -20,15 +21,18 @@ public class BulletSpawner : MonoBehaviour
 
     void Start()
     {
-        
+        player = GameObject.FindWithTag("Player");
     }
 
     
     void Update()
     {
-        timer += Time.deltaTime;
-        if(spawnerType == SpawnerType.Spin) transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z+1f);
-        if(timer >= firingRate) 
+       timer += Time.deltaTime;
+        if (spawnerType == SpawnerType.Spin)
+        {
+            transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z + 1f);
+        }
+        if (timer >= firingRate)
         {
             Fire();
             timer = 0;
@@ -42,7 +46,15 @@ public class BulletSpawner : MonoBehaviour
             spawnedBullet = Instantiate(bullet, transform.position, Quaternion.identity);
             spawnedBullet.GetComponent<Bullet>().speed = speed;
             spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
-            spawnedBullet.transform.rotation = transform.rotation;
+            if (spawnerType == SpawnerType.Straight && player != null)
+            {
+                Vector2 direction = (player.transform.position - transform.position).normalized;
+                spawnedBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+            }
+            else
+            {
+                spawnedBullet.transform.rotation = transform.rotation;
+            }
         }
     }
 }
