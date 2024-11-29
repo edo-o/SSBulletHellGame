@@ -54,6 +54,7 @@ public class BulletSpawner : MonoBehaviour
             else
             {
                 spawnedBullet.transform.rotation = transform.rotation;
+                spawnedBullet.GetComponent<Rigidbody2D>().velocity = transform.up * speed;
             }
         }
     }

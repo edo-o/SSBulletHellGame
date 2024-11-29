@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 907478768299308506}
   - component: {fileID: 7331210056055907846}
   - component: {fileID: 5779929988146061002}
-  - component: {fileID: 7071490534026177208}
   - component: {fileID: 4792466456448737485}
   - component: {fileID: 2532382650618362329}
   m_Layer: 10
@@ -152,18 +151,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
---- !u!114 &7071490534026177208
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7152463413829822994}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c6ee6d0d2f1a3c94c9e46029423f7027, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4792466456448737485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -278,8 +265,43 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 5147482014393605051, guid: 1faaec6af0598d842ad3a4720129efdc, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5544753008054349163}
   m_SourcePrefab: {fileID: 100100000, guid: 1faaec6af0598d842ad3a4720129efdc, type: 3}
+--- !u!1 &3487247811723596627 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5147482014393605051, guid: 1faaec6af0598d842ad3a4720129efdc, type: 3}
+  m_PrefabInstance: {fileID: 8577869608196737256}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &5544753008054349163
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3487247811723596627}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!4 &3546166366698459380 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5060978852102166556, guid: 1faaec6af0598d842ad3a4720129efdc, type: 3}

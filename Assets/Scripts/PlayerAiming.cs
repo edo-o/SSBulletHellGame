@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class PlayerAiming : MonoBehaviour
 {
+
+    void Start()
+    {
+    }
+
     void Update()
     {
         Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
