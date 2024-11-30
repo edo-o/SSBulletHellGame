@@ -16,10 +16,12 @@ public class NewBehaviourScript : MonoBehaviour
     public GameObject projectilePrefab;
     public Transform projectileSpawnPoint;
     private Rigidbody2D body;
+    private PlayerAiming playerAiming;
 
     void Start()
     {
         body = GetComponent<Rigidbody2D>();
+        playerAiming = GetComponent<PlayerAiming>();
         currentSpeed = normalSpeed;
         currentFireRate = normalFireRate;
     }
@@ -32,7 +34,7 @@ public class NewBehaviourScript : MonoBehaviour
         body.velocity = new Vector2(moveHorizontal * currentSpeed, moveVertical * currentSpeed);
 
 
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Mouse0))
         {
             if (!isShooting)
             {
@@ -71,6 +73,7 @@ public class NewBehaviourScript : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
 
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
-        projectileRb.velocity = new Vector2(0, 30f);
+        Vector2 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - projectileSpawnPoint.position).normalized;
+        projectileRb.velocity = direction * 30f;
     }
 }

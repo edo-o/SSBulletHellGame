@@ -63,6 +63,8 @@ public class EnemySpawner : MonoBehaviour
         float camHeight = mainCamera.orthographicSize;
         float camWidth = camHeight * mainCamera.aspect;
 
+
+        // Få enemies til å spawne på høyre og venstre side av skjermen
         Vector2 spawnPosition = new Vector2(Random.Range(-camWidth, camWidth), camHeight + spawnDistance);
 
         return spawnPosition;
