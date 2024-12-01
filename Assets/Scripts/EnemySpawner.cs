@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    public GameObject regularEnemyPrefab;
     public GameObject bossEnemyPrefab;
-    public float spawnRadius = 1.5f;
     public float spawnDelay = 2f;
-    public int totalRegularEnemies = 5;
     public float spawnDistance = 5f;
 
-    private int enemiesSpawned = 0;
     private bool bossSpawned = false;
     private Camera mainCamera;
 
@@ -20,19 +16,20 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         mainCamera = Camera.main;
-        StartCoroutine(SpawnRegularEnemies());
+        StartCoroutine(SpawnBosses());
     }
 
-    private IEnumerator SpawnRegularEnemies()
+    private IEnumerator SpawnBosses()
     {
-        while (enemiesSpawned < totalRegularEnemies)
+        while (true)
         {
-            SpawnEnemy(regularEnemyPrefab);
-            enemiesSpawned++;
+            if (!bossSpawned)
+            {
+                SpawnBoss();
+                bossSpawned = true;
+            }
             yield return new WaitForSeconds(spawnDelay);
         }
-
-        SpawnBoss();
     }
 
     private void SpawnEnemy(GameObject enemyPrefab)
@@ -53,8 +50,6 @@ public class EnemySpawner : MonoBehaviour
 
             Vector2 targetPosition = GameObject.FindWithTag("TargetPosition").transform.position;
             bossEnemy.GetComponent<EnemyMovement>().SetTargetPosition(targetPosition);
-
-            bossSpawned = true;
         }
     }
 
