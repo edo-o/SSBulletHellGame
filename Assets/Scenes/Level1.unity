@@ -326,11 +326,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3adf074c11e0c4148898950e11aa0589, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  regularEnemyPrefab: {fileID: 7152463413829822994, guid: 1b1a6b1d1e1816c49a5d81b6679f16bb, type: 3}
   bossEnemyPrefab: {fileID: 3455721371699553475, guid: d2ff0c4ad7dba1846be28233d827e2d8, type: 3}
-  spawnRadius: 1.5
   spawnDelay: 4
-  totalRegularEnemies: 5
   spawnDistance: 5
   targetPosition: {x: 0, y: 0}
 --- !u!4 &1025735335
