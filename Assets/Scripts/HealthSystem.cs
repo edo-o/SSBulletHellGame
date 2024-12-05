@@ -8,19 +8,32 @@ public class HealthSystem : MonoBehaviour
     private int currentHealth;
     public GameObject explosionPrefab;
 
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
+
     void Start()
     {
         currentHealth = maxHealth;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
     }
     
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        StartCoroutine(FlashRed());
 
         if (currentHealth <= 0)
         {
             Die();
         }
+    }
+
+    private IEnumerator FlashRed()
+    {
+        spriteRenderer.color = Color.red;
+        yield return new WaitForSeconds(0.05f);
+        spriteRenderer.color = originalColor;
     }
 
     
