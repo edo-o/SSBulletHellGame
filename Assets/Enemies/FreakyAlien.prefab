@@ -202,6 +202,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fd1b185b115d0f4a87ab6ebec6e0f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentPattern: 2
+  zigZagSpeed: 5
+  zigZagWidth: 3
+  zigZagTimer: 0
+  circularSpeed: 3
+  circularRadius: 2
+  circularAngle: 0
+  player: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
+  followSpeed: 2
+  moveToTargetSpeed: 2
+  movementBounds: {x: 10, y: 5}
 --- !u!1001 &1416826397203325155
 PrefabInstance:
   m_ObjectHideFlags: 0

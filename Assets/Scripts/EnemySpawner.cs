@@ -31,16 +31,6 @@ public class EnemySpawner : MonoBehaviour
             yield return new WaitForSeconds(spawnDelay);
         }
     }
-
-    private void SpawnEnemy(GameObject enemyPrefab)
-    {
-        Vector2 spawnPosition = GetOffScreenPosition();
-        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        
-        Vector2 targetPosition = GameObject.FindWithTag("TargetPosition").transform.position;
-        enemy.GetComponent<EnemyMovement>().SetTargetPosition(targetPosition);
-    }
-
     private void SpawnBoss()
     {
         if (!bossSpawned)
@@ -59,9 +49,12 @@ public class EnemySpawner : MonoBehaviour
         float camWidth = camHeight * mainCamera.aspect;
 
 
-        Vector2 spawnPosition = new Vector2(Random.Range(-camWidth, camWidth), camHeight + spawnDistance);
+        // Randomly choose to spawn on the left or right side
+        bool spawnOnLeft = Random.value > 0.5f;
+        float xPosition = spawnOnLeft ? -camWidth - spawnDistance : camWidth + spawnDistance;
+        float yPosition = Random.Range(-camHeight, camHeight);
 
-        return spawnPosition;
+        return new Vector2(xPosition, yPosition);
     }
     
 }
