@@ -202,16 +202,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fd1b185b115d0f4a87ab6ebec6e0f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPattern: 2
-  zigZagSpeed: 5
+  currentPattern: 1
+  zigZagSpeed: 3
   zigZagWidth: 3
   zigZagTimer: 0
   circularSpeed: 3
   circularRadius: 2
   circularAngle: 0
-  player: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
   followSpeed: 2
-  moveToTargetSpeed: 2
+  moveToTargetSpeed: 5
   movementBounds: {x: 10, y: 5}
 --- !u!1001 &1416826397203325155
 PrefabInstance:
@@ -305,7 +304,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletLife: 5
   speed: 7
-  spawnerType: 4
+  spawnerType: 3
   explosionBulletCount: 8
   smallBullet: {fileID: 8339488564155003692, guid: 35bc5e2571d2486479feecfd764d526d, type: 3}
   mediumBullet: {fileID: 3349808821276010445, guid: d79a84de865f17548874b02b1d14c009, type: 3}
@@ -406,7 +405,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletLife: 5
   speed: 7
-  spawnerType: 4
+  spawnerType: 3
   explosionBulletCount: 8
   smallBullet: {fileID: 8339488564155003692, guid: 35bc5e2571d2486479feecfd764d526d, type: 3}
   mediumBullet: {fileID: 3349808821276010445, guid: d79a84de865f17548874b02b1d14c009, type: 3}

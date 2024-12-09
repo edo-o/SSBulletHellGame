@@ -39,7 +39,7 @@ public class EnemySpawner : MonoBehaviour
             GameObject bossEnemy = Instantiate(bossEnemyPrefab, spawnPosition, Quaternion.identity);
 
             Vector2 targetPosition = GameObject.FindWithTag("TargetPosition").transform.position;
-            bossEnemy.GetComponent<EnemyMovement>().SetTargetPosition(targetPosition);
+            bossEnemy.GetComponent<BossMovement>().SetTargetPosition(targetPosition);
         }
     }
 
