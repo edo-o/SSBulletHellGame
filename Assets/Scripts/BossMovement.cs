@@ -6,6 +6,9 @@ using UnityEngine;
 public class BossMovement : MonoBehaviour
 {
 
+    public float changePatternInterval = 5f;
+    private float patternTimer;
+
     public enum MovementPattern {Static, ZigZag, Circle, FollowPlayer, MoveToTarget }
     public MovementPattern currentPattern;
 
@@ -42,6 +45,13 @@ public class BossMovement : MonoBehaviour
     
     void Update()
     {
+        patternTimer += Time.deltaTime;
+        if (patternTimer >= changePatternInterval)
+        {
+            RandomizeMovementPattern();
+            patternTimer = 0f;
+        }
+
         if (movingToTarget)
         {
             MoveToTarget();
@@ -64,6 +74,14 @@ public class BossMovement : MonoBehaviour
                     break;
             }
         }
+    }
+
+    private void RandomizeMovementPattern()
+    {
+        int patternCount = System.Enum.GetValues(typeof(MovementPattern)).Length;
+        currentPattern = (MovementPattern)Random.Range(0, patternCount);
+
+        Debug.Log("New pattern: " + currentPattern);
     }
 
     public void SetTargetPosition(Vector2 targetPos)

@@ -175,7 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e58cd891a42d7814cb6b28f04a98824e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 30
+  maxHealth: 300
   explosionPrefab: {fileID: 5330045719513488236, guid: 099846d8b57733e44a8c95e79f8cefdd, type: 3}
 --- !u!114 &1013728448729490694
 MonoBehaviour:
@@ -202,7 +202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8fd1b185b115d0f4a87ab6ebec6e0f16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPattern: 1
+  changePatternInterval: 5
+  currentPattern: 0
   zigZagSpeed: 3
   zigZagWidth: 3
   zigZagTimer: 0
@@ -211,7 +212,7 @@ MonoBehaviour:
   circularAngle: 0
   followSpeed: 2
   moveToTargetSpeed: 5
-  movementBounds: {x: 10, y: 5}
+  movementBounds: {x: 8, y: 4}
 --- !u!1001 &1416826397203325155
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -304,10 +305,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletLife: 5
   speed: 7
-  spawnerType: 3
+  spawnerType: 0
   explosionBulletCount: 8
   smallBullet: {fileID: 8339488564155003692, guid: 35bc5e2571d2486479feecfd764d526d, type: 3}
   mediumBullet: {fileID: 3349808821276010445, guid: d79a84de865f17548874b02b1d14c009, type: 3}
+  changeAttackInterval: 5
 --- !u!4 &6167012739897309439 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5060978852102166556, guid: 1faaec6af0598d842ad3a4720129efdc, type: 3}
@@ -405,10 +407,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletLife: 5
   speed: 7
-  spawnerType: 3
+  spawnerType: 0
   explosionBulletCount: 8
   smallBullet: {fileID: 8339488564155003692, guid: 35bc5e2571d2486479feecfd764d526d, type: 3}
   mediumBullet: {fileID: 3349808821276010445, guid: d79a84de865f17548874b02b1d14c009, type: 3}
+  changeAttackInterval: 5
 --- !u!4 &3582031829261421550 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5060978852102166556, guid: 1faaec6af0598d842ad3a4720129efdc, type: 3}

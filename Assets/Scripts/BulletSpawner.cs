@@ -23,6 +23,10 @@ public class BulletSpawner : MonoBehaviour
     private float spiralAngle = 0f;
     private float waveAngle = 0f;
 
+    [Header("Randomization Attributes")]
+    public float changeAttackInterval = 5f;
+    private float attackChangeTimer = 0f;
+
     void Start()
     {
         player = GameObject.FindWithTag("Player");
@@ -32,15 +36,32 @@ public class BulletSpawner : MonoBehaviour
     void Update()
     {
        timer += Time.deltaTime;
+       attackChangeTimer += Time.deltaTime;
+
+       if (attackChangeTimer >= changeAttackInterval)
+       {
+              RandomizeAttackPattern();
+              attackChangeTimer = 0f;
+       }
+
         if (spawnerType == SpawnerType.Spin)
         {
             transform.eulerAngles = new Vector3(0f, 0f, transform.eulerAngles.z + 1f);
         }
+
         if (timer >= firingRate)
         {
             Fire();
             timer = 0;
         }
+    }
+
+    private void RandomizeAttackPattern()
+    {
+        int patternCount = System.Enum.GetNames(typeof(SpawnerType)).Length;
+        spawnerType = (SpawnerType)Random.Range(0, patternCount);
+
+        Debug.Log("New Attack Pattern: " + spawnerType);
     }
 
     private void Fire()
