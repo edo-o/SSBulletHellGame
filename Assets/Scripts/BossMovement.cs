@@ -33,12 +33,15 @@ public class BossMovement : MonoBehaviour
 
     private Vector3 startPosition;
     private bool movingToTarget = true;
+    private Vector3 currentTargetPosition;
+    private Vector3 bossPos;
 
 
 
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
+        currentTargetPosition = startPosition;
         startPosition = transform.position;
     }
 
@@ -87,6 +90,7 @@ public class BossMovement : MonoBehaviour
     public void SetTargetPosition(Vector2 targetPos)
     {
         targetPosition = targetPos;
+        movingToTarget = true;
     }
 
     private void MoveToTarget()
@@ -95,6 +99,7 @@ public class BossMovement : MonoBehaviour
         if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
         {
             movingToTarget = false;
+            currentTargetPosition = targetPosition;
         }
     }
 
@@ -105,17 +110,19 @@ public class BossMovement : MonoBehaviour
 
     private void ZigZagMovement()
     {
+        bossPos = transform.position;
         zigZagTimer += Time.deltaTime * zigZagSpeed;
         float x = Mathf.Sin(zigZagTimer) * zigZagWidth;
-        transform.position = new Vector3(targetPosition.x + x, targetPosition.y, 0);
+        transform.position = new Vector3(bossPos.x + x, bossPos.y, 0);
     }
 
     private void CircleMovement()
     {
+        bossPos = transform.position;
         circularAngle += Time.deltaTime * circularSpeed;
         float x = Mathf.Cos(circularAngle) * circularRadius;
         float y = Mathf.Sin(circularAngle) * circularRadius;
-        transform.position = new Vector3(targetPosition.x + x, targetPosition.y + y, 0);
+        transform.position = new Vector3(bossPos.x + x, bossPos.y + y, 0);
     }
 
     private void FollowPlayerMovement()
