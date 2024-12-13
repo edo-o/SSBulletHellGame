@@ -5,7 +5,7 @@ using UnityEngine;
 public class HealthSystem : MonoBehaviour
 {
     public int maxHealth = 10;
-    private int currentHealth;
+    public int currentHealth;
     public GameObject explosionPrefab;
 
     private SpriteRenderer spriteRenderer;

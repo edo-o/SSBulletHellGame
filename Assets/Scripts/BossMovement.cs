@@ -5,11 +5,13 @@ using UnityEngine;
 
 public class BossMovement : MonoBehaviour
 {
+    private SpriteRenderer spriteRenderer;
+    private Color originalColor;
 
     public float changePatternInterval = 5f;
     private float patternTimer;
 
-    public enum MovementPattern {Static, ZigZag, Circle, FollowPlayer, MoveToTarget }
+    public enum MovementPattern { ZigZag, Circle, FollowPlayer, MoveToTarget, Idle }
     public MovementPattern currentPattern;
 
     //Zig-Zag settings
@@ -26,6 +28,10 @@ public class BossMovement : MonoBehaviour
     private Transform player;
     public float followSpeed = 2f;
 
+    //idle settings
+    public float idleSpeed = 1f;
+    private Vector3 idleTargetPosition;
+
     private Vector3 targetPosition;
     public float moveToTargetSpeed = 10f;
 
@@ -37,12 +43,25 @@ public class BossMovement : MonoBehaviour
     private Vector3 bossPos;
 
 
+    private HealthSystem bossHealth;
+    public enum BossPhase { Phase1, Phase2}
+    public BossPhase currentPhase;
+
 
     void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
         currentTargetPosition = startPosition;
         startPosition = transform.position;
+        SetRandomIdleTarget();
+
+
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        originalColor = spriteRenderer.color;
+
+        bossHealth = GetComponent<HealthSystem>();
+
+        currentPhase = BossPhase.Phase1;
     }
 
     
@@ -55,17 +74,32 @@ public class BossMovement : MonoBehaviour
             patternTimer = 0f;
         }
 
+        if (bossHealth.currentHealth <= bossHealth.maxHealth / 2)
+        {
+            currentPhase = BossPhase.Phase2;
+        }
         if (movingToTarget)
         {
             MoveToTarget();
         }
-        else
+        else if (currentPhase == BossPhase.Phase1)
         {
+            Phase1();
             switch (currentPattern)
             {
-                case MovementPattern.Static:
-                    StaticMovement();
+                case MovementPattern.FollowPlayer:
+                    FollowPlayerMovement();
                     break;
+                case MovementPattern.Idle:
+                    IdleMovement();
+                    break;
+            }
+        }
+        else if (currentPhase == BossPhase.Phase2)
+        {
+            Phase2();
+            switch (currentPattern)
+            {
                 case MovementPattern.ZigZag:
                     ZigZagMovement();
                     break;
@@ -75,16 +109,34 @@ public class BossMovement : MonoBehaviour
                 case MovementPattern.FollowPlayer:
                     FollowPlayerMovement();
                     break;
+                case MovementPattern.Idle:
+                    IdleMovement();
+                    break;
             }
         }
     }
 
     private void RandomizeMovementPattern()
     {
-        int patternCount = System.Enum.GetValues(typeof(MovementPattern)).Length;
-        currentPattern = (MovementPattern)Random.Range(0, patternCount);
+        List<MovementPattern> validPatterns = new List<MovementPattern>();
 
-        Debug.Log("New pattern: " + currentPattern);
+        if (currentPhase == BossPhase.Phase1)
+        {
+            validPatterns.Add(MovementPattern.FollowPlayer);
+            validPatterns.Add(MovementPattern.Idle);
+        }
+        else if (currentPhase == BossPhase.Phase2)
+        {
+            validPatterns.Add(MovementPattern.ZigZag);
+            validPatterns.Add(MovementPattern.Circle);
+            validPatterns.Add(MovementPattern.FollowPlayer);
+            validPatterns.Add(MovementPattern.Idle);
+        }
+
+        int patternCount = validPatterns.Count;
+        currentPattern = validPatterns[Random.Range(0, patternCount)];
+
+        bossPos = transform.position;
     }
 
     public void SetTargetPosition(Vector2 targetPos)
@@ -103,14 +155,17 @@ public class BossMovement : MonoBehaviour
         }
     }
 
-    private void StaticMovement()
+    private void IdleMovement ()
     {
-        //Do nothing
+        transform.position = Vector3.MoveTowards(transform.position, idleTargetPosition, idleSpeed * Time.deltaTime);
+        if (Vector3.Distance(transform.position, idleTargetPosition) < 0.1f)
+        {
+            SetRandomIdleTarget();
+        }
     }
 
     private void ZigZagMovement()
     {
-        bossPos = transform.position;
         zigZagTimer += Time.deltaTime * zigZagSpeed;
         float x = Mathf.Sin(zigZagTimer) * zigZagWidth;
         transform.position = new Vector3(bossPos.x + x, bossPos.y, 0);
@@ -118,7 +173,6 @@ public class BossMovement : MonoBehaviour
 
     private void CircleMovement()
     {
-        bossPos = transform.position;
         circularAngle += Time.deltaTime * circularSpeed;
         float x = Mathf.Cos(circularAngle) * circularRadius;
         float y = Mathf.Sin(circularAngle) * circularRadius;
@@ -140,10 +194,30 @@ public class BossMovement : MonoBehaviour
         }
     }
 
-
-    private void OnDrawGizmos()
+    private void SetRandomIdleTarget()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(Vector3.zero, new Vector3(movementBounds.x * 2, movementBounds.y * 2, 0));
+        float x = Random.Range(-movementBounds.x, movementBounds.x);
+        float y = Random.Range(-movementBounds.y, movementBounds.y);
+        idleTargetPosition = new Vector3(x, y, 0);
     }
+    private void Phase1()
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = originalColor;
+        }
+        followSpeed = 2f;
+    }
+
+    private void Phase2()
+    {
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.color = Color.red;
+        }
+        followSpeed = 3.5f;
+        idleSpeed = 6f;
+    }
+
+
 }

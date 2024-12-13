@@ -27,9 +27,14 @@ public class BulletSpawner : MonoBehaviour
     public float changeAttackInterval = 5f;
     private float attackChangeTimer = 0f;
 
+    private HealthSystem bossHealth;
+    private BossMovement bossMovement;
+
     void Start()
     {
         player = GameObject.FindWithTag("Player");
+        bossHealth = GetComponent<HealthSystem>();
+        bossMovement = GetComponent<BossMovement>();
     }
 
     
@@ -58,10 +63,21 @@ public class BulletSpawner : MonoBehaviour
 
     private void RandomizeAttackPattern()
     {
-        int patternCount = System.Enum.GetNames(typeof(SpawnerType)).Length;
-        spawnerType = (SpawnerType)Random.Range(0, patternCount);
+        List<SpawnerType> validPatterns = new List<SpawnerType>();
 
-        Debug.Log("New Attack Pattern: " + spawnerType);
+        if ( bossMovement.currentPhase == BossMovement.BossPhase.Phase1)
+        {
+            validPatterns.Add(SpawnerType.Straight);
+            validPatterns.Add(SpawnerType.Spiral);
+        }
+        else if (bossMovement.currentPhase == BossMovement.BossPhase.Phase2)
+        {
+            validPatterns.Add(SpawnerType.Wave);
+            validPatterns.Add(SpawnerType.Explosion);
+        }
+
+        int patternCount = validPatterns.Count;
+        spawnerType = validPatterns[Random.Range(0, patternCount)];
     }
 
     private void Fire()
