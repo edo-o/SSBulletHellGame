@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
-    enum SpawnerType { Straight, Spin, Spiral, Wave, Explosion }
+    enum SpawnerType { Straight, Spin, Spiral, Wave, Explosion, TripleShot }
 
     [Header("Bullet Attributes")]
     public float bulletLife;
@@ -69,11 +69,13 @@ public class BulletSpawner : MonoBehaviour
         {
             validPatterns.Add(SpawnerType.Straight);
             validPatterns.Add(SpawnerType.Spiral);
+            validPatterns.Add(SpawnerType.TripleShot);
         }
         else if (bossMovement.currentPhase == BossMovement.BossPhase.Phase2)
         {
             validPatterns.Add(SpawnerType.Wave);
             validPatterns.Add(SpawnerType.Explosion);
+            validPatterns.Add(SpawnerType.TripleShot);
         }
 
         int patternCount = validPatterns.Count;
@@ -122,6 +124,24 @@ public class BulletSpawner : MonoBehaviour
                 Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
                 spawnedBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
                 waveAngle += 10f;
+            }
+            else if (spawnerType == SpawnerType.TripleShot)
+            {
+                firingRate = 1f;
+                float[] angles = { -15, 0f, 15f };
+
+                Vector2 baseDirection = (player.transform.position - transform.position).normalized;
+                float baseAngle = Mathf.Atan2(baseDirection.y, baseDirection.x) * Mathf.Rad2Deg;
+
+                foreach (float angle in angles)
+                {
+                    float radian = (baseAngle + angle) * Mathf.Deg2Rad;
+                    Vector2 direction = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+                    spawnedBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                    spawnedBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                    spawnedBullet.GetComponent<Bullet>().speed = speed;
+                    spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                }
             }
             else if (spawnerType == SpawnerType.Explosion)
             {
