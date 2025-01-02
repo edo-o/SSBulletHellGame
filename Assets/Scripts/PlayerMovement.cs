@@ -28,12 +28,6 @@ public class NewBehaviourScript : MonoBehaviour
 
     void Update()
     {
-        float moveHorizontal = Input.GetAxis("Horizontal");
-        float moveVertical = Input.GetAxis("Vertical");
-
-        body.velocity = new Vector2(moveHorizontal * currentSpeed, moveVertical * currentSpeed);
-
-
         if (Input.GetKey(KeyCode.Mouse0))
         {
             if (!isShooting)
@@ -57,7 +51,14 @@ public class NewBehaviourScript : MonoBehaviour
             currentSpeed = normalSpeed;
             currentFireRate = normalFireRate;
         }
-    } 
+    }
+    private void FixedUpdate()
+    {
+        float moveHorizontal = Input.GetAxis("Horizontal");
+        float moveVertical = Input.GetAxis("Vertical");
+
+        body.velocity = new Vector2(moveHorizontal * currentSpeed, moveVertical * currentSpeed);
+    }
 
     private IEnumerator ShootContinuosly()
     {
