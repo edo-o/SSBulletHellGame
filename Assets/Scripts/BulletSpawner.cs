@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BulletSpawner : MonoBehaviour
 {
-    enum SpawnerType { Straight, Spin, Spiral, Wave, Explosion, TripleShot }
+    enum SpawnerType { Straight, Spin, Spiral, Wave, Explosion, TripleShot, EnragedTripleShot }
 
     [Header("Bullet Attributes")]
     public float bulletLife;
@@ -75,7 +75,7 @@ public class BulletSpawner : MonoBehaviour
         {
             validPatterns.Add(SpawnerType.Wave);
             validPatterns.Add(SpawnerType.Explosion);
-            validPatterns.Add(SpawnerType.TripleShot);
+            validPatterns.Add(SpawnerType.EnragedTripleShot);
         }
 
         int patternCount = validPatterns.Count;
@@ -86,7 +86,7 @@ public class BulletSpawner : MonoBehaviour
     {
         GameObject bulletPrefab = null;
 
-        if (spawnerType == SpawnerType.Spiral)
+        if (spawnerType == SpawnerType.Wave)
         {
             bulletPrefab = smallBullet;
         }
@@ -94,36 +94,21 @@ public class BulletSpawner : MonoBehaviour
         {
             bulletPrefab = mediumBullet;
         }
-        
-        if(bulletPrefab)
+
+        if (bulletPrefab)
         {
-            spawnedBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-            spawnedBullet.GetComponent<Bullet>().speed = speed;
-            spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
-            if (spawnerType == SpawnerType.Straight && player != null)
+            if (spawnerType == SpawnerType.Explosion)
             {
-                firingRate = 0.4f;
-                
-                Vector2 direction = (player.transform.position - transform.position).normalized;
-                spawnedBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
-            }
-            else if (spawnerType == SpawnerType.Spiral)
-            {
-                firingRate = 0.1f;
-
-                float angle = spiralAngle * Mathf.Deg2Rad;
-                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-                spawnedBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
-                spiralAngle += 10f;
-            }
-            else if (spawnerType == SpawnerType.Wave)
-            {
-                firingRate = 0.05f;
-
-                float angle = Mathf.Sin(waveAngle * Mathf.Deg2Rad) * 45f;
-                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-                spawnedBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
-                waveAngle += 10f;
+                firingRate = 0.5f;
+                for (int i = 0; i < explosionBulletCount; i++)
+                {
+                    float angle = i * (360f / explosionBulletCount);
+                    Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
+                    GameObject explosionBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                    explosionBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                    explosionBullet.GetComponent<Bullet>().speed = speed;
+                    explosionBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                }
             }
             else if (spawnerType == SpawnerType.TripleShot)
             {
@@ -137,30 +122,60 @@ public class BulletSpawner : MonoBehaviour
                 {
                     float radian = (baseAngle + angle) * Mathf.Deg2Rad;
                     Vector2 direction = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
-                    spawnedBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                    spawnedBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
-                    spawnedBullet.GetComponent<Bullet>().speed = speed;
-                    spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                    GameObject tripleShotBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                    tripleShotBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                    tripleShotBullet.GetComponent<Bullet>().speed = speed;
+                    tripleShotBullet.GetComponent<Bullet>().bulletLife = bulletLife;
                 }
             }
-            else if (spawnerType == SpawnerType.Explosion)
+            else if (spawnerType == SpawnerType.EnragedTripleShot)
             {
-                for (int i = 0; i < explosionBulletCount; i++)
-                {
-                    firingRate = 0.5f;
+                firingRate = 0.5f;
+                float[] angles = { -15, 0f, 15f };
 
-                    float angle = i * (360 / explosionBulletCount);
-                    Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
-                    spawnedBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                    spawnedBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
-                    spawnedBullet.GetComponent<Bullet>().speed = speed;
-                    spawnedBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                Vector2 baseDirection = (player.transform.position - transform.position).normalized;
+                float baseAngle = Mathf.Atan2(baseDirection.y, baseDirection.x) * Mathf.Rad2Deg;
+
+                foreach (float angle in angles)
+                {
+                    float radian = (baseAngle + angle) * Mathf.Deg2Rad;
+                    Vector2 direction = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
+                    GameObject enragedTripleShotBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                    enragedTripleShotBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                    enragedTripleShotBullet.GetComponent<Bullet>().speed = speed;
+                    enragedTripleShotBullet.GetComponent<Bullet>().bulletLife = bulletLife;
                 }
             }
-            else
+            else if (spawnerType == SpawnerType.Straight && player != null)
             {
-                spawnedBullet.transform.rotation = transform.rotation;
-                spawnedBullet.GetComponent<Rigidbody2D>().velocity = transform.up * speed;
+                firingRate = 0.4f;
+                Vector2 direction = (player.transform.position - transform.position).normalized;
+                GameObject straightBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                straightBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                straightBullet.GetComponent<Bullet>().speed = speed;
+                straightBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+            }
+            else if (spawnerType == SpawnerType.Spiral)
+            {
+                firingRate = 0.1f;
+                float angle = spiralAngle * Mathf.Deg2Rad;
+                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                GameObject spiralBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                spiralBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                spiralBullet.GetComponent<Bullet>().speed = speed;
+                spiralBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                spiralAngle += 10f;
+            }
+            else if (spawnerType == SpawnerType.Wave)
+            {
+                firingRate = 0.05f;
+                float angle = Mathf.Sin(waveAngle * Mathf.Deg2Rad) * 45f;
+                Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+                GameObject waveBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
+                waveBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                waveBullet.GetComponent<Bullet>().speed = speed;
+                waveBullet.GetComponent<Bullet>().bulletLife = bulletLife;
+                waveAngle += 10f;
             }
         }
     }
