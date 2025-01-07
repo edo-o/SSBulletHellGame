@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 
-public class NewBehaviourScript : MonoBehaviour
+public class PlayerMovement : MonoBehaviour
 {
     public float normalSpeed = 5f;
     public float focusedSpeed = 2.5f;
@@ -33,7 +33,7 @@ public class NewBehaviourScript : MonoBehaviour
             if (!isShooting)
             {
                 isShooting = true;
-                StartCoroutine(ShootContinuosly());
+                StartCoroutine(ShootContinuously());
             }
         }
         else
@@ -52,6 +52,7 @@ public class NewBehaviourScript : MonoBehaviour
             currentFireRate = normalFireRate;
         }
     }
+
     private void FixedUpdate()
     {
         float moveHorizontal = Input.GetAxis("Horizontal");
@@ -60,7 +61,7 @@ public class NewBehaviourScript : MonoBehaviour
         body.velocity = new Vector2(moveHorizontal * currentSpeed, moveVertical * currentSpeed);
     }
 
-    private IEnumerator ShootContinuosly()
+    private IEnumerator ShootContinuously()
     {
         while (isShooting)
         {
@@ -74,7 +75,9 @@ public class NewBehaviourScript : MonoBehaviour
         GameObject projectile = Instantiate(projectilePrefab, projectileSpawnPoint.position, Quaternion.identity);
 
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
-        Vector2 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - projectileSpawnPoint.position).normalized;
-        projectileRb.velocity = direction * 30f;
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 direction = (mousePosition - (Vector2)projectileSpawnPoint.position).normalized;
+        float projectileSpeed = 30f; // Fixed speed for the projectile
+        projectileRb.velocity = direction * projectileSpeed;
     }
 }
