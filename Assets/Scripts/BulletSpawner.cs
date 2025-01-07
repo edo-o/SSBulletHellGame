@@ -181,6 +181,7 @@ public class BulletSpawner : MonoBehaviour
     }
 }
 
+//caralhete
 
 //straight bullet: Fire rate = 0.4, Bullet size = medium.
 //spiral bullet: Fire rate = 0.1 , Bullet size = small.
