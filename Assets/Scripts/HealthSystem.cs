@@ -11,16 +11,28 @@ public class HealthSystem : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
 
+    [SerializeField] private Healthbar _healthbar;
+
     void Start()
     {
         currentHealth = maxHealth;
         spriteRenderer = GetComponent<SpriteRenderer>();
         originalColor = spriteRenderer.color;
+
+        if (_healthbar != null)
+        {
+            _healthbar.UpdateHealthBar(maxHealth, currentHealth);
+        }
     }
     
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        if (_healthbar != null)
+        {
+            _healthbar.UpdateHealthBar(maxHealth, currentHealth);
+        }
+
         StartCoroutine(FlashRed());
 
         if (currentHealth <= 0)
@@ -34,9 +46,14 @@ public class HealthSystem : MonoBehaviour
         spriteRenderer.color = Color.red;
         yield return new WaitForSeconds(0.05f);
         spriteRenderer.color = originalColor;
+
+        if (_healthbar != null)
+        {
+            _healthbar.UpdateHealthBar(maxHealth, currentHealth);
+        }
     }
 
-    
+
     void Die()
     {
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
