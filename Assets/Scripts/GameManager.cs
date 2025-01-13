@@ -14,6 +14,12 @@ public class GameManager : MonoBehaviour
     public static GameManager instance;
     private bool levelWon = false;
 
+    private void Start()
+    {
+        winPanel.SetActive(false);
+        losePanel.SetActive(false);
+    }
+
     private void Update()
     {
         if (bossHealth != null && bossHealth.currentHealth <= 0)
