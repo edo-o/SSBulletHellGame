@@ -16,26 +16,22 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        // Find the boss GameObject by its tag
+        GameObject boss = GameObject.FindWithTag("Boss");
+        if (boss != null)
+        {
+            bossHealth = boss.GetComponent<HealthSystem>();
+        }
+
         winPanel.SetActive(false);
         losePanel.SetActive(false);
-    }
-
-    private void Update()
-    {
-        if (bossHealth != null && bossHealth.currentHealth <= 0)
-        {
-            WinGame();
-        }
-        if (playerHealth != null && playerHealth.currentHealth <= 0)
-        {
-            LoseGame();
-        }
     }
 
     void WinGame()
     {
         winPanel.SetActive(true);
-        Time.timeScale = 0;
+        Time.timeScale = 0; // Stop time
+        Debug.Log("WinGame called: Win screen should be active.");
     }
 
     void LoseGame()
@@ -44,10 +40,14 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
     }
 
+    private void Update()
+    {
+    }
+
     public void RetryGame()
     {
         Time.timeScale = 1; // Reset time scale
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex); 
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     void Awake()
@@ -68,6 +68,21 @@ public class GameManager : MonoBehaviour
         {
             levelWon = true;
             Debug.Log("Level Complete!");
+            WinGame();
+        }
+    }
+
+    public void PlayerDefeated()
+    {
+        if (!levelWon)
+        {
+            levelWon = false;
+            Debug.Log("Player Defeated!");
+            LoseGame();
         }
     }
 }
+
+
+
+

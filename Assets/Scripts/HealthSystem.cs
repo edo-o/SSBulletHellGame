@@ -7,6 +7,7 @@ public class HealthSystem : MonoBehaviour
     public int maxHealth = 10;
     public int currentHealth;
     public GameObject explosionPrefab;
+    public GameManager LoseGame;
 
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
@@ -24,13 +25,19 @@ public class HealthSystem : MonoBehaviour
             _healthbar.UpdateHealthBar(maxHealth, currentHealth);
         }
     }
-    
+
     public void TakeDamage(int damage)
     {
         currentHealth -= damage;
+        Debug.Log("Current Health after damage: " + currentHealth);
         if (_healthbar != null)
         {
             _healthbar.UpdateHealthBar(maxHealth, currentHealth);
+            Debug.Log("Healthbar updated in TakeDamage.");
+        }
+        else
+        {
+            Debug.LogError("Healthbar reference is not set in the Inspector.");
         }
 
         StartCoroutine(FlashRed());
@@ -53,7 +60,6 @@ public class HealthSystem : MonoBehaviour
         }
     }
 
-
     void Die()
     {
         Instantiate(explosionPrefab, transform.position, Quaternion.identity);
@@ -63,6 +69,15 @@ public class HealthSystem : MonoBehaviour
             GameManager.instance.BossDefeated();
         }
 
+        if (gameObject.CompareTag("Player"))
+        {
+            GameManager.instance.PlayerDefeated();
+        }
+
         Destroy(gameObject);
     }
 }
+
+
+
+
