@@ -105,7 +105,7 @@ public class BulletSpawner : MonoBehaviour
                     float angle = i * (360f / explosionBulletCount);
                     Vector2 direction = new Vector2(Mathf.Cos(angle * Mathf.Deg2Rad), Mathf.Sin(angle * Mathf.Deg2Rad));
                     GameObject explosionBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                    explosionBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                    explosionBullet.GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
                     explosionBullet.GetComponent<Bullet>().speed = speed;
                     explosionBullet.GetComponent<Bullet>().bulletLife = bulletLife;
                 }
@@ -123,7 +123,7 @@ public class BulletSpawner : MonoBehaviour
                     float radian = (baseAngle + angle) * Mathf.Deg2Rad;
                     Vector2 direction = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
                     GameObject tripleShotBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                    tripleShotBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                    tripleShotBullet.GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
                     tripleShotBullet.GetComponent<Bullet>().speed = speed;
                     tripleShotBullet.GetComponent<Bullet>().bulletLife = bulletLife;
                 }
@@ -141,7 +141,7 @@ public class BulletSpawner : MonoBehaviour
                     float radian = (baseAngle + angle) * Mathf.Deg2Rad;
                     Vector2 direction = new Vector2(Mathf.Cos(radian), Mathf.Sin(radian));
                     GameObject enragedTripleShotBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                    enragedTripleShotBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                    enragedTripleShotBullet.GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
                     enragedTripleShotBullet.GetComponent<Bullet>().speed = speed;
                     enragedTripleShotBullet.GetComponent<Bullet>().bulletLife = bulletLife;
                 }
@@ -151,7 +151,7 @@ public class BulletSpawner : MonoBehaviour
                 firingRate = 0.4f;
                 Vector2 direction = (player.transform.position - transform.position).normalized;
                 GameObject straightBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                straightBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                straightBullet.GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
                 straightBullet.GetComponent<Bullet>().speed = speed;
                 straightBullet.GetComponent<Bullet>().bulletLife = bulletLife;
             }
@@ -161,7 +161,7 @@ public class BulletSpawner : MonoBehaviour
                 float angle = spiralAngle * Mathf.Deg2Rad;
                 Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
                 GameObject spiralBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                spiralBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                spiralBullet.GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
                 spiralBullet.GetComponent<Bullet>().speed = speed;
                 spiralBullet.GetComponent<Bullet>().bulletLife = bulletLife;
                 spiralAngle += 10f;
@@ -172,7 +172,7 @@ public class BulletSpawner : MonoBehaviour
                 float angle = Mathf.Sin(waveAngle * Mathf.Deg2Rad) * 45f;
                 Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
                 GameObject waveBullet = Instantiate(bulletPrefab, transform.position, Quaternion.identity);
-                waveBullet.GetComponent<Rigidbody2D>().velocity = direction * speed;
+                waveBullet.GetComponent<Rigidbody2D>().linearVelocity = direction * speed;
                 waveBullet.GetComponent<Bullet>().speed = speed;
                 waveBullet.GetComponent<Bullet>().bulletLife = bulletLife;
                 waveAngle += 10f;

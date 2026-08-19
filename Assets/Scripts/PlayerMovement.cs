@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");
         float moveVertical = Input.GetAxis("Vertical");
 
-        body.velocity = new Vector2(moveHorizontal * currentSpeed, moveVertical * currentSpeed);
+        body.linearVelocity = new Vector2(moveHorizontal * currentSpeed, moveVertical * currentSpeed);
     }
 
     private IEnumerator ShootContinuously()
@@ -78,6 +78,6 @@ public class PlayerMovement : MonoBehaviour
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mousePosition - (Vector2)projectileSpawnPoint.position).normalized;
         float projectileSpeed = 30f; // Fixed speed for the projectile
-        projectileRb.velocity = direction * projectileSpeed;
+        projectileRb.linearVelocity = direction * projectileSpeed;
     }
 }
