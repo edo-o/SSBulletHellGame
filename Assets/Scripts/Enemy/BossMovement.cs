@@ -7,6 +7,7 @@ public class BossMovement : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
+    private bool isFlashing;
 
     public float changePatternInterval = 5f;
     private float patternTimer;
@@ -202,7 +203,7 @@ public class BossMovement : MonoBehaviour
     }
     private void Phase1()
     {
-        if (spriteRenderer != null)
+        if (spriteRenderer != null && !isFlashing)
         {
             spriteRenderer.color = originalColor;
         }
@@ -211,7 +212,7 @@ public class BossMovement : MonoBehaviour
 
     private void Phase2()
     {
-        if (spriteRenderer != null)
+        if (spriteRenderer != null && !isFlashing)
         {
             spriteRenderer.color = Color.red;
         }

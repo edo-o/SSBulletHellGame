@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 8af4c5b8d4b7cd744befd414aa79fd07
+guid: a25b96732b39d2b4f829d1df4549e279
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 5348226558039428788
-    second: HealthBarFull4_0
+      213: 8140593895237489223
+    second: PlayerBullet_0
+  - first:
+      213: -7484447809639736232
+    second: PlayerBullet_1
+  - first:
+      213: -3771614941500981657
+    second: PlayerBullet_2
+  - first:
+      213: 6103179255318148469
+    second: PlayerBullet_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -51,7 +60,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -72,7 +81,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 4
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 32
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 0
@@ -113,13 +122,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: HealthBarFull4_0
+      name: PlayerBullet_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 10
-        width: 31
-        height: 15
+        x: 2
+        y: 14
+        width: 9
+        height: 8
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -128,8 +137,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4be004ae7b7b83a40800000000000000
-      internalID: 5348226558039428788
+      spriteID: 742185a540339f070800000000000000
+      internalID: 8140593895237489223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerBullet_1
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 14
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 85c19761f56e12890800000000000000
+      internalID: -7484447809639736232
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerBullet_2
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 14
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 76e374e813888abc0800000000000000
+      internalID: -3771614941500981657
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlayerBullet_3
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 14
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 57575c95239d2b450800000000000000
+      internalID: 6103179255318148469
       vertices: []
       indices: 
       edges: []
@@ -148,7 +223,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      HealthBarFull4_0: 5348226558039428788
+      PlayerBullet_0: 8140593895237489223
+      PlayerBullet_1: -7484447809639736232
+      PlayerBullet_2: -3771614941500981657
+      PlayerBullet_3: 6103179255318148469
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

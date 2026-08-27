@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: 116617772}
   - component: {fileID: 116617774}
   - component: {fileID: 116617773}
+  - component: {fileID: 116617775}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -194,15 +195,15 @@ RectTransform:
   m_GameObject: {fileID: 116617771}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.39, y: 3.39, z: 3.39}
+  m_LocalScale: {x: 2.55, y: 2.55, z: 2.55}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1486897458}
   m_Father: {fileID: 367925106}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -959, y: 537}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 234, y: -141}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &116617773
@@ -225,7 +226,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 4dbc227b7a5a7b6489bd76074b6244b4, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 440cdad91e261a543b60c664873e072a, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -243,6 +244,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 116617771}
   m_CullTransparentMesh: 1
+--- !u!114 &116617775
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 116617771}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b277175e88cea9c42ac158e46ad86ab8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Healthbar
+  _healthbarSprite: {fileID: 116617773}
+  _useSpriteStates: 1
+  _healthSprites:
+  - {fileID: 21300000, guid: 67984cf1820e1c947aa26dcd8ba98c4d, type: 3}
+  - {fileID: 21300000, guid: 85df86f9faee0e849b9840dfa314b98c, type: 3}
+  - {fileID: 21300000, guid: 9664e3900eea1b94da3c9101a2353930, type: 3}
+  - {fileID: 21300000, guid: 4dbc227b7a5a7b6489bd76074b6244b4, type: 3}
+  - {fileID: 21300000, guid: 440cdad91e261a543b60c664873e072a, type: 3}
+  _fillSpeed: 2
 --- !u!1 &322881039
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,10 +358,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -424,7 +446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainCamera: {fileID: 1857627246}
-  cursorSprite: {fileID: 474102140}
+  cursorSprite: {fileID: 9175827506155642503, guid: 6b4276e4486adc342815f8d9b7ae472e, type: 3}
 --- !u!212 &474102140
 SpriteRenderer:
   serializedVersion: 3
@@ -494,9 +516,9 @@ Transform:
   m_GameObject: {fileID: 474102138}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.3878, y: -1.1878, z: 2.02}
-  m_LocalScale: {x: 4.049165, y: 4.049165, z: 4.049165}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: -10.63, y: -0.01, z: -2.05}
+  m_LocalScale: {x: 1.35, y: 1.35, z: 1.35}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2035,7 +2057,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1486897458
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5129,27 +5151,27 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.6319552
+      value: 2.12
       objectReference: {fileID: 0}
     - target: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.6319552
+      value: 2.12
       objectReference: {fileID: 0}
     - target: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.6319552
+      value: 2.12
       objectReference: {fileID: 0}
     - target: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.0565
+      value: -0.02
       objectReference: {fileID: 0}
     - target: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.0712
+      value: -3.71
       objectReference: {fileID: 0}
     - target: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.36
       objectReference: {fileID: 0}
     - target: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: m_LocalRotation.w
@@ -5179,6 +5201,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 4412403771170127730, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6176242633874964291, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: normalSpeed
       value: 7
@@ -5194,6 +5220,18 @@ PrefabInstance:
     - target: {fileID: 6956718093705478835, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: _healthbar
       value: 
+      objectReference: {fileID: 116617775}
+    - target: {fileID: 7127462488180051592, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7127462488180051592, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5cce5ad5993b7e747935183bf9ba2015, type: 3}
+    - target: {fileID: 7127462488180051592, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7521601137292129614, guid: b0fa696bc4361ca41a5e6ff8c426cd72, type: 3}
       propertyPath: m_Name
