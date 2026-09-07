@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         Rigidbody2D projectileRb = projectile.GetComponent<Rigidbody2D>();
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 direction = (mousePosition - (Vector2)projectileSpawnPoint.position).normalized;
-        float projectileSpeed = 30f; // Fixed speed for the projectile
+        float projectileSpeed = 30f;
         projectileRb.linearVelocity = direction * projectileSpeed;
     }
 }

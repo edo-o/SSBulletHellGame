@@ -7,10 +7,10 @@ public class BossMovement : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     private Color originalColor;
-    private bool isFlashing;
 
     public float changePatternInterval = 5f;
     private float patternTimer;
+    private bool isFlashing;
 
     public enum MovementPattern { ZigZag, Circle, FollowPlayer, MoveToTarget, Idle }
     public MovementPattern currentPattern;
